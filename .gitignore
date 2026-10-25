@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.env
+.env.*
+*.sqlite*
+*.log
+*.joblib
+ag_models/
+originals/
+private/
+*.zip

@@ -1,0 +1,67 @@
+{
+  "seed": 42,
+  "scenario": "Instructor-supplied synthetic Falcon Telecom simulation",
+  "units": "AED savings relative to all-generalist handling; net_per_1000 is normalized to 1,000 tickets",
+  "python": "3.13.15",
+  "sklearn": "1.9.1",
+  "runs": {
+    "default_eval": {
+      "n": 2000,
+      "net_per_1000": 514564.5,
+      "cost_per_1000": 532262.0,
+      "baseline_per_1000": 1046826.5,
+      "critical_total": 82,
+      "critical_misses": 17,
+      "oracle_calls": 0,
+      "oracle_budget": 140,
+      "oracle_invalid": 0,
+      "sla_violations": 126,
+      "mean_l2_wait": 88.53573604060911,
+      "total_savings_aed": 1029129.0
+    },
+    "default_championship": {
+      "n": 3000,
+      "net_per_1000": 715728.3333333334,
+      "cost_per_1000": 683482.6666666666,
+      "baseline_per_1000": 1399211.0,
+      "critical_total": 208,
+      "critical_misses": 75,
+      "oracle_calls": 0,
+      "oracle_budget": 210,
+      "oracle_invalid": 0,
+      "sla_violations": 292,
+      "mean_l2_wait": 316.04327160493824,
+      "total_savings_aed": 2147185.0
+    },
+    "student_eval": {
+      "n": 2000,
+      "net_per_1000": 991725.5,
+      "cost_per_1000": 55101.0,
+      "baseline_per_1000": 1046826.5,
+      "critical_total": 82,
+      "critical_misses": 2,
+      "oracle_calls": 11,
+      "oracle_budget": 140,
+      "oracle_invalid": 0,
+      "sla_violations": 0,
+      "mean_l2_wait": 0.23550000000000182,
+      "total_savings_aed": 1983451.0
+    },
+    "student_championship": {
+      "n": 3000,
+      "net_per_1000": 1054384.6666666667,
+      "cost_per_1000": 344826.3333333333,
+      "baseline_per_1000": 1399211.0,
+      "critical_total": 208,
+      "critical_misses": 4,
+      "oracle_calls": 30,
+      "oracle_budget": 210,
+      "oracle_invalid": 0,
+      "sla_violations": 540,
+      "mean_l2_wait": 927.2951152073732,
+      "total_savings_aed": 3163154.0
+    }
+  },
+  "regional_network_critical_misses": 0,
+  "scope": "Routing exercise only; not proof of AutoML notebook completion or real deployment"
+}
