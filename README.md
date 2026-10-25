@@ -8,11 +8,11 @@ A classifier becomes useful when its predictions lead to better decisions. This 
 
 ## Measured outcome
 
-On the supplied outage-day simulation, the policy saved **AED 1,054,385 per 1,000 tickets**, compared with **AED 715,728** for the instructor's starter policy. Across the full 3,000-ticket day, that is **AED 3,163,154 in simulated total savings** relative to sending every ticket to a generalist.
+On the supplied outage-day simulation, the policy saved **AED 1,225,831 per 1,000 tickets**, compared with **AED 715,728** for the instructor's starter policy. Across the full 3,000-ticket day, that is **AED 3,677,493 in simulated total savings** relative to sending every ticket to a generalist.
 
-Critical tickets that never reached a specialist fell from **75 to 4**. None of the regional network critical tickets missed the specialist desk.
+Critical tickets that never reached a specialist fell from **75 to 9**. Five regional network critical tickets missed the specialist desk.
 
-These are different units: **AED 1.05 million per 1,000** and **AED 3.16 million total** describe the same run. They are simulated cost savings, not revenue or measured real-world savings.
+These are different units: **AED 1.23 million per 1,000** and **AED 3.68 million total** describe the same run. They are simulated cost savings, not revenue or measured real-world savings.
 
 ## What I worked on
 
@@ -22,13 +22,15 @@ The five policy entry points implement:
 - **Cost-aware routing:** choose the desk with minimum expected cost using current prices and queues.
 - **Expert escalation:** pay for a label only when its expected decision value exceeds its fee; account for the expert being wrong.
 - **Label selection:** spend the 400-label budget on cost-weighted uncertainty, with coverage across customer segments.
-- **Outage safeguards:** send regional network symptoms to specialists even when the outage flag is missing.
+- **Outage safeguards:** adjust regional critical risk and prevent risky mass automation, while preserving cost-aware specialist allocation.
 
 I completed this course exercise with AI assistance for implementation, verification, environment troubleshooting, and documentation. The measured results and policy are inspectable here. I do not claim to have authored the instructor's simulator, assignment, or datasets.
 
 ## A tradeoff worth reporting
 
-The outage safeguard is conservative. It reduces critical misses, but specialist queues grow: SLA violations increase from **292 to 540**, and average specialist waiting time increases from **316 to 927 minutes**. Savings improve under the published prices, but the policy is not a proven optimum. A next iteration would evaluate a capacity-aware safeguard on a separate validation set before scoring a fresh holdout.
+Compared with the previously published policy, outage-day total savings increased from **AED 3,163,154 to AED 3,677,493**, an improvement of **AED 514,339**. SLA violations fell from **540 to 164**, but critical misses increased from **4 to 9** (regional network misses: **0 to 5**). This is a cost improvement with a safety tradeoff, not a win on every metric. The revised policy remains a single global HistGradientBoosting model; a three-model alternative was tested and saved less on the official day and two validation days. See [what changed](CHANGELOG.md).
+
+The official evaluation day had already been observed. Separate validation seeds 903/904 compared candidates; a subsequent independent seed 905 check showed savings increasing from AED 2,884,403 to AED 3,381,216, with critical misses increasing 3 to 13 and SLA violations falling 525 to 175. These checks use the same synthetic generator and do not establish real-world performance.
 
 ## Explore the work
 

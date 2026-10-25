@@ -1,7 +1,5 @@
 {
   "seed": 42,
-  "scenario": "Instructor-supplied synthetic Falcon Telecom simulation",
-  "units": "AED savings relative to all-generalist handling; net_per_1000 is normalized to 1,000 tickets",
   "python": "3.13.15",
   "sklearn": "1.9.1",
   "runs": {
@@ -49,19 +47,18 @@
     },
     "student_championship": {
       "n": 3000,
-      "net_per_1000": 1054384.6666666667,
-      "cost_per_1000": 344826.3333333333,
+      "net_per_1000": 1225831.0,
+      "cost_per_1000": 173380.0,
       "baseline_per_1000": 1399211.0,
       "critical_total": 208,
-      "critical_misses": 4,
-      "oracle_calls": 30,
+      "critical_misses": 9,
+      "oracle_calls": 32,
       "oracle_budget": 210,
       "oracle_invalid": 0,
-      "sla_violations": 540,
-      "mean_l2_wait": 927.2951152073732,
-      "total_savings_aed": 3163154.0
+      "sla_violations": 164,
+      "mean_l2_wait": 94.29095477386937,
+      "total_savings_aed": 3677493.0
     }
   },
-  "regional_network_critical_misses": 0,
-  "scope": "Routing exercise only; not proof of AutoML notebook completion or real deployment"
+  "regional_network_critical_misses": 5
 }

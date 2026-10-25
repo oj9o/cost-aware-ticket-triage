@@ -1,8 +1,4 @@
-"""Cost-aware ticket triage policy — Mouza Al Darmaki.
-
-AI-assisted implementation for MAAI7101 Lab 9, based on the instructor's
-published decision API. Requires the separately obtained instructor lab.
-"""
+"""AI-assisted MAAI7101 Lab 9 policy — Mouza Al Darmaki. Requires the instructor lab."""
 from __future__ import annotations
 
 import numpy as np
@@ -86,9 +82,7 @@ def choose_labels(pool_df, proba_df, budget, seed):
 def wants_oracle(ticket, proba, context):
     if int(context.get("oracle_remaining", 0)) <= 0:
         return False
-    if _outage_ticket(ticket, context):
-        return False  # The mandatory final override cannot use this information.
-    p = _prior(proba)
+    p = _decision_prior(ticket, proba, context)
     joint = p[:, None] * _expert_matrix(ticket)
     after = 0.0
     for j in range(4):
@@ -100,7 +94,7 @@ def wants_oracle(ticket, proba, context):
 
 
 def route(ticket, proba, context):
-    p = _prior(proba)
+    p = _decision_prior(ticket, proba, context)
     answer = context.get("oracle_label")
     if answer in _LABELS:
         posterior = p * _expert_matrix(ticket)[:, _LABELS.index(answer)]
@@ -115,8 +109,21 @@ def _outage_ticket(ticket, context):
             and ticket.get("symptom") in ("network_down", "slow_data"))
 
 
-def apply_business_rules(ticket, action, context):
-    # Regional network symptoms matter even when the outage flag is missing.
+def _decision_prior(ticket, proba, context):
+    p = _prior(proba)
     if _outage_ticket(ticket, context):
-        return "l2"
+        # Conservative prior-shift adjustment, not an automatic specialist referral.
+        # Fixed before evaluation; does not inspect hidden labels.
+        p[3] *= 3.0
+        p /= p.sum()
+    return p
+
+
+def apply_business_rules(ticket, action, context):
+    # An outage flag can be missing. Prevent risky mass automation while allowing
+    # the cost-aware route to reserve scarce specialists for likely criticals.
+    if (_outage_ticket(ticket, context) and action == "automate"
+            and float(ticket.get("affected_users", 0)) >= 100
+            and float(ticket.get("complexity", 0)) > 0.55):
+        return "l1"
     return action
